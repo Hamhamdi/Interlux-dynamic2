@@ -1,0 +1,31 @@
+{% extends 'main.html'%}
+
+{%block content%}
+
+    
+<body class="vertical  dark  ">
+    <div class="wrapper">
+        {{ extra_context }}
+
+      
+        {%include 'navbar.html'%}
+        {%include 'sidebar.html'%}
+ 
+
+
+    
+
+        {%include 'base/general_dyn.html'%}
+
+
+
+
+    </div>  
+    
+    
+    
+</body>
+{%include 'notification.html'%}
+
+
+{%endblock content%}

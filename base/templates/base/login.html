@@ -1,0 +1,130 @@
+{% extends 'main.html'%}
+{% load crispy_forms_tags %}
+
+
+{%block content%}
+<!-- <body class="vertical dark">
+    <main role="main" class="main-content">
+
+<div class="layout__body">
+<form class="form" action="" method="POST">
+    {%csrf_token%}
+    {%for field in login_form%}
+
+    <div class="form__group">
+        {{field.label_tag}}
+        {{field}}
+
+        {% if field.help_text%}
+        <small style="color: gray;">{{field.help_text}}</small>
+        {%endif%}
+
+        {% for error in field.errors%}
+        <p style="color: red;">{{field.error}}</p>
+        {%endfor%}
+
+        {%if login_form.non_field_errors%}
+        <div style="color: red;">
+            <p>{{login_form.non_field_errors}}</p>
+
+        </div>
+        {%endif%}
+        {{request.user.email}}
+
+
+    </div>
+
+    {%endfor%}
+
+    <button class="btn btn--main" type="submit">Login</button>
+
+</form>
+
+</div>
+    </main>
+</body> -->
+
+<body class="dark ">
+    <div class="wrapper vh-100">
+      <div class="row align-items-center h-100">
+        <form class="col-lg-3 col-md-4 col-10 mx-auto text-center"  method="POST">
+            {%csrf_token%}
+            <a class="navbar-brand mx-auto mt-2 flex-fill text-center" >
+              <img style="width: 180px; margin-bottom: 5px;" src="/static/images/cropped-logo-interlux-1-1536x883-1-min.png" alt="">
+
+            </a>
+
+            {{login_form|crispy}}
+
+
+
+
+
+
+            <button  class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          <!-- <a class="navbar-brand mx-auto mt-2 flex-fill text-center" href="./index.html">
+            <svg version="1.1" id="logo" class="navbar-brand-img brand-md" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 120 120" xml:space="preserve">
+              <g>
+                <polygon class="st0" points="78,105 15,105 24,87 87,87 	" />
+                <polygon class="st0" points="96,69 33,69 42,51 105,51 	" />
+                <polygon class="st0" points="78,33 15,33 24,15 87,15 	" />
+              </g>
+            </svg>
+          </a>
+          <h1 class="h6 mb-3">Sign in</h1>
+          <div class="form-group"> -->
+            <!-- <div class="form-group">
+              <select name="role" class="form-control form-control-lg" aria-label="Default select example">
+                <option  selected>Selectionner un Role</option>
+                <option value="responsable informatique">responsable informatique</option>
+                <option value="chargee affaire">chargee affaire</option>
+                <option value="responsable logistique1">responsable logistique1</option>
+                <option value="responsable logistique2">responsable logistique2</option>
+                <option value="responsable financier">responsable financier</option>
+
+
+              </select>
+            </div> -->
+            <!-- <label for="inputEmail" class="sr-only">Username</label>
+            <input name="username" type="username" id="inputEmail" class="form-control form-control-lg" placeholder="Username" required="" autofocus="">
+          </div>
+          <div class="form-group">
+            <label for="inputPassword" class="sr-only">Password</label>
+            <input name="password" type="password" id="inputPassword" class="form-control form-control-lg" placeholder="Password" required="">
+          </div>
+          <div class="checkbox mb-3">
+            <label>
+              <input type="checkbox" value="remember-me"> Stay logged in </label>
+          </div>
+          <button  class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+          {%for message in messages %}
+          <p>{{message}}</p>
+
+          {%endfor%}
+          <p class="mt-5 mb-3 text-muted">© 2022</p> -->
+        </form>
+      </div>
+    </div>
+
+  </body>
+
+{%endblock content%}

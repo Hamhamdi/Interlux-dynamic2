@@ -1,0 +1,72 @@
+<div class="modal fade modal-notif modal-slide" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="defaultModalLabel">Notifications</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="list-group list-group-flush my-n3">
+            <div class="list-group-item bg-transparent">
+
+            {%for field in general_datable_1%}
+
+            <div class="row align-items-center">
+              <div class="col-auto">
+                <span class="fe fe-folder fe-24"></span>
+              </div>
+
+              {%if user.role == 'chargee affaire'%}
+              <a   href="{% url 'update_ca' field.id %}">
+              {%endif%}
+
+              {%if user.role == 'responsable logistique1'%}
+              <a  href="{% url 'update_log1' field.id %}">
+              {%endif%}
+              {%if user.role == 'responsable logistique2'%}
+              <a   href="{% url 'update_log2' field.id %}">
+              {%endif%}
+
+              {%if user.role == 'responsable financier'%}
+              <a   href="{% url 'update_fin' field.id %}">
+              {%endif%}
+
+              {%if user.role == 'responsable informatique'%}
+              <a   href="{% url 'update_info' field.id %}">
+              {%endif%}
+
+             
+
+
+         
+              
+              
+
+              
+                <div class="col">
+                  <small style="color: black;">Dossier N° :<strong style="color: orange;"> {{field.n_Dossier}}</strong></small>
+                </a>
+              </a>
+            </a>
+          </a>
+        </a>
+                  <div class="my-0 small" style="color: rgba(0, 0, 0, 0.623);">Dossier disponible </div>
+                  <small class="badge badge-pill badge-light text-muted">1h ago</small>
+                </div>
+                
+              </div>
+     
+                
+            {%endfor%}
+            </div> <!-- / .row -->
+
+          </div> <!-- / .list-group -->
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Clear All</button>
+        </div>
+      </div>
+    </div>

@@ -1,0 +1,29 @@
+{%extends 'main.html'%}
+
+{%block content%}
+
+<main class="layout layout--3">
+    <div class="container">
+        <div> INTERLUX </div>
+        <p>@{{user.username}}</p>
+
+      
+
+        <a href="{% url 'respo_ca' request.user.id %}" class="thread__authorInfo">
+             respo ca
+        </a>
+        <a href="{% url 'respo_fin' request.user.id %}" class="thread__authorInfo">
+             respo fin
+        </a>  <a href="{% url 'respo_log1' request.user.id %}" class="thread__authorInfo">
+             respo log 1
+        </a>  <a href="{% url 'respo_log2' request.user.id %}" class="thread__authorInfo">
+             respo log 2
+        </a>  <a href="{% url 'respo_info' request.user.id %}" class="thread__authorInfo">
+             respo inf
+        </a>
+
+
+    </div>
+</main>
+
+{%endblock content%}

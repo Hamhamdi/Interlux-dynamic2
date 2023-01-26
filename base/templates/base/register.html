@@ -1,0 +1,31 @@
+{% extends 'main.html'%}
+
+{%block content%}
+
+<div class="layout__body">
+<form action="" class="form" method="POST">
+    {%csrf_token%}
+    {%for field in registration_form%}
+    <div class="form__group">
+        <label for="room_name">{{field.label}}</label>
+        <!-- {{field.label_tag}} -->
+        {{field}}
+
+        {% if field.help_text%}
+        <small style="color: gray;">{{field.help_text}}</small>
+        {%endif%}
+
+        {% for error in field.errors%}
+        <p style="color: red;">{{error}}</p>
+        {%endfor%}
+
+    </div>
+
+    {%endfor%}
+
+    
+    <button class="btn btn--main" type="submit">Register</button>
+
+</form>
+</div>
+{%endblock content%}

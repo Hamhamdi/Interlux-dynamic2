@@ -1,0 +1,438 @@
+{% extends 'main.html'%}
+
+{%block content%}
+
+<body class="vertical  dark  ">
+    <div class="wrapper">
+        {{ extra_context }}
+
+        {%include 'navbar.html'%}
+        {%include 'sidebar.html'%}
+          <main role="main" class="main-content">
+              <div class="container-fluid">
+                  <div class="row justify-content-center">
+                    <div class="col-12">
+                      
+
+                        <span id="innervalue">
+
+                          <small style="font-weight:bold;"> Statut Dossier N°  : <a style="font-weight:300;"  id="new_nd"> </a> </small>
+
+
+                          
+                        </span>
+
+                        {%include 'progressbar.html'%}
+                        
+
+                          <hr>
+                          {% if user.role == "chargee affaire" %}
+                          <a class="btn btn-outline-primary" href="{% url  'respo_ca_add' %}">Ajouter</a>
+                          {%endif%}
+                          <a class="btn btn-outline-success" href="{% url  'generalfile' %}">Export General
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-file-earmark-excel" viewBox="0 0 16 16">
+                              <path d="M5.884 6.68a.5.5 0 1 0-.768.64L7.349 10l-2.233 2.68a.5.5 0 0 0 .768.64L8 10.781l2.116 2.54a.5.5 0 0 0 .768-.641L8.651 10l2.233-2.68a.5.5 0 0 0-.768-.64L8 9.219l-2.116-2.54z"/>
+                              <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z"/>
+                            </svg> </a>
+
+
+                  <div class="row my-4">
+                    <!-- Small table -->
+                    <div class="col-md-12">
+                      <div class="card shadow">
+                        <div class="card-body">
+                          <!-- table -->
+                          <table class="table datatables" id="dataTable-1">
+                            <thead>
+                              <tr>
+                                <th>N Dossier</th>
+                                <th>Fournisseur</th>
+                                <th>Pays</th>
+                                <th>Nom</th>
+                                <th>Client</th>
+                                <th>Date du validation des conditions Logistiques</th>
+                                <th>Date Validation</th>
+                                <th>Statut Importation</th>
+                                <th> Date transmission de la commande au service logistique</th>
+                                <th>Code Fournisseur Sage</th>
+                                <th>Reference bon de commande Sage</th>
+                                <th>Catégorie commande</th>
+                                <th>Date Confirmation de commande Fournisseur</th>
+                                <th>Numero FP</th>
+                                <th>Date FP</th>
+                                <th>Pays D'origine</th>
+                                <th>Incoterm</th>
+                                <th>Pays Prelevement</th>
+                                <th>Montant Devises</th>
+                                <th>Devise</th>
+                                <th>Mode Payement</th>
+                                <th>Delai de livraison</th>
+                                <th>Execution condition payment</th>
+                                <th>Date Prevu Pickup Fournisseur</th>
+                                <th>Date Prevu Arrivee au maroc</th>
+                                <th>Date Validation</th>
+                                <th>Delai Etape 2</th>
+                                <th>Date PickUp</th>
+                                <th>FreightForward</th>
+                                <th>Mode Transport</th>
+                                <th>Date Arrivee Maroc</th>
+                                <th>Transiter</th>
+                                <th>Montant dedouanement dh</th>
+                                <th>Date livraison Depot</th>
+                                <th>Date livraison client</th>
+                                <th>Litige</th>
+                                <th>Classe Litige</th>
+                                <th>Date Validation</th>
+                                <th>Delai Etape 3</th>
+                                <th>Date clôture Administrative du Payement Fournisseur</th>
+                                <th>Date clôture administrative du Payement des Partenaires</th>
+                                <th>Date Validation</th>
+                                <th>Delai Etape 4</th>
+                                <th>Date Clôture Administrative du Cout de Revient Sage</th>
+                                <th>Date Validation</th>
+                                <th>Delai Etape 5</th>
+                                <th style="display:none;">etape</th>
+                                <th>Action</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {% for field in general_datable %}
+                          
+                              <tr>
+
+                              
+
+
+                                <td class="current_td">
+                                  
+                                <a class="etape" onclick="getValue(this)">  
+                                  <p  id="value" style="display: none;" >{{field.etape}} </p>
+                                  
+                                  {{field.n_Dossier }}
+                                </a> 
+                              </td> 
+                              {{GeneralDTable.get_delai}}
+
+                            
+                                <td>{{field.fournisseur}}</td>
+                                <td>{{field.pays}}</td>
+                                <td>{{field.nom}}</td>
+                                <td>{{field.client}}</td>
+                                <td>{{field.date_VCL|date:"d/m/Y"}}</td>
+                                <td>{{field.date_validation_e1|date:"d/m/Y, h:i"}}</td>
+
+                                <td>{{field.statut_Imp|default_if_none:"" }}</td>
+                                <td>{{field.date_TCS|default_if_none:""|date:"d/m/Y" }}</td>
+                                <td>{{field.code_Four_Sage|default_if_none:"" }}</td>
+                                <td>{{field.ref_Bon_Cmd_Sage|default_if_none:"" }}</td>
+                                <td>{{field.cat_Cmd|default_if_none:"" }}</td>
+                                <td>{{field.date_CCF|default_if_none:""|date:"d/m/Y" }}</td>
+                                <td>{{field.n_FP|default_if_none:"" }}</td>
+                                <td>{{field.date_FP|default_if_none:"" |date:"d/m/Y"}}</td>
+                                <td>{{field.pays_Origine|default_if_none:"" }}</td>
+                                <td>{{field.incoterm|default_if_none:"" }}</td>
+                                <td>{{field.pays_Prt|default_if_none:"" }}</td>
+                                <td>{{field.montant_Dev|default_if_none:"" }}</td>
+                                <td>{{field.devise|default_if_none:"" }}</td>
+                                <td>{{field.mode_Pay|default_if_none:"" }}</td>
+                                <td>{{field.delai_Liv|default_if_none:"" }}</td>
+                                <td>{{field.Exec_Co_Pay|default_if_none:"" }}</td>
+                                <td>{{field.date_PPF|default_if_none:"" |date:"d/m/Y"}}</td>
+                                <td>{{field.date_PAM|default_if_none:"" |date:"d/m/Y"}}</td>
+                                <td>{{field.date_validation_e2|default_if_none:""|date:"d/m/Y, h:i" }}</td>
+                                {% if field.delai_e2 == None %}
+                                <td> Non Terminé  </td>
+                                {% else %}
+                                <td> {{field.delai_e2}} Jour</td>
+                                {% endif %}
+
+
+
+
+                                <td>{{field.date_pickup |default_if_none:"" |date:"d/m/Y"}}</td>
+                                <td>{{field.freightforward |default_if_none:"" }}</td>
+                                <td>{{field.mode_trans |default_if_none:"" }}</td>
+                                <td>{{field.date_AM |default_if_none:"" |date:"d/m/Y"}}</td>
+                                <td>{{field.transitaire|default_if_none:"" }}</td>
+                                <td>{{field.Mt_ded_dh|default_if_none:"" }}</td>
+                                <td>{{field.date_ld|default_if_none:"" |date:"d/m/Y"}}</td>
+                                <td>{{field.date_lc|default_if_none:"" |date:"d/m/Y"}}</td>
+                                <td>{{field.litige|default_if_none:"" }}</td>
+                                <td>{{field.class_litige|default_if_none:"" }}</td>
+                                <td>{{field.date_validation_e3|default_if_none:""|date:"d/m/Y h:i" }}</td>
+                                {% if field.delai_e3 == None %}
+                                <td> Non Terminé </td>
+                                {% else %}
+                                <td>{{field.delai_e3|default_if_none:"" }} Jour</td>
+                                {% endif %}
+
+                                <td>{{field.date_capf|default_if_none:"" |date:"d/m/Y"}}</td>
+                                <td>{{field.date_capp|default_if_none:"" |date:"d/m/Y"}}</td>
+                                <td>{{field.date_validation_e4|default_if_none:"" |date:"d/m/Y h:i"}}</td>
+                                {% if field.delai_e4 == None %}
+                                <td> Non Terminé  </td>
+                                {% else %}
+                                <td>{{field.delai_e4|default_if_none:"" }} Jour</td>
+                                {% endif %}
+
+                                <td>{{field.date_cacrs|default_if_none:""|date:"d/m/Y" }}</td>
+                                <td>{{field.date_validation_e5|default_if_none:"" |date:"d/m/Y h:i"}}</td>
+                                {% if field.delai_e5 == None %}
+                                <td> Non Terminé  </td>
+                                {% else %}
+                                <td>{{field.delai_e5|default_if_none:"" }} Jour</td>
+                                {% endif %}
+
+                                <td style="display:none;">
+                                  {{field.etape|default_if_none:"" }}</td>
+                                  <input id="role" type="hidden"  value="{{user.role}}">
+                            
+                                <td>
+                                  
+                                    <span class="text-muted sr-only">Action</span>
+                                
+                                  <div class="row text-center  flex-wrap">
+                                    {%if user.etape == field.etape and user.role == "chargee affaire" %}
+                                    <a class="btn btn-outline-primary" href="{% url 'update_ca' field.id %}" style="padding: 2px 11px;">
+                                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                        <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                        <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                                      </svg></a> 
+
+                            <a class="btn btn-outline-success " href="{% url 'dossier' field.id %}" style="padding: 2px 11px;">
+                                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-excel" viewBox="0 0 16 16">
+                                        <path d="M5.884 6.68a.5.5 0 1 0-.768.64L7.349 10l-2.233 2.68a.5.5 0 0 0 .768.64L8 10.781l2.116 2.54a.5.5 0 0 0 .768-.641L8.651 10l2.233-2.68a.5.5 0 0 0-.768-.64L8 9.219l-2.116-2.54z"/>
+                                        <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z"/>
+                                      </svg> </a> 
+                                    {%endif%}
+
+                                    {%if user.etape == field.etape and user.role == "responsable logistique1" %}
+
+                                    <!-- <a class="dropdown-item" href="{% url 'respo_log1_add' field.id %}">Ajouter</a> -->
+
+                                    <a class="btn btn-outline-primary" href="{% url 'update_log1' field.id %}" style="padding: 2px 11px;">
+                                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                        <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                        <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                                      </svg></a> 
+
+                            <a class="btn btn-outline-success " href="{% url 'dossier' field.id %}" style="padding: 2px 11px;">
+                                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-excel" viewBox="0 0 16 16">
+                                        <path d="M5.884 6.68a.5.5 0 1 0-.768.64L7.349 10l-2.233 2.68a.5.5 0 0 0 .768.64L8 10.781l2.116 2.54a.5.5 0 0 0 .768-.641L8.651 10l2.233-2.68a.5.5 0 0 0-.768-.64L8 9.219l-2.116-2.54z"/>
+                                        <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z"/>
+                                      </svg> </a> 
+
+                                    {%endif%}
+                              
+
+                                    {%if user.etape == field.etape  and user.role == "responsable logistique2" %}
+                                    <!-- <a class="dropdown-item" href="{% url 'respo_log2_add' field.id %}">Ajouter</a> -->
+                              
+
+                                    <a class="btn btn-outline-primary" href="{% url 'update_log2' field.id %}" style="padding: 2px 11px;">
+                                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                        <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                        <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                                      </svg></a> 
+
+                            <a class="btn btn-outline-success " href="{% url 'dossier' field.id %}" style="padding: 2px 11px;">
+                                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-excel" viewBox="0 0 16 16">
+                                        <path d="M5.884 6.68a.5.5 0 1 0-.768.64L7.349 10l-2.233 2.68a.5.5 0 0 0 .768.64L8 10.781l2.116 2.54a.5.5 0 0 0 .768-.641L8.651 10l2.233-2.68a.5.5 0 0 0-.768-.64L8 9.219l-2.116-2.54z"/>
+                                        <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z"/>
+                                      </svg> </a> 
+
+
+                                    {%endif%}
+
+
+                                    {%if user.etape == field.etape and user.role == "responsable financier" %}
+                                    <!-- <a class="dropdown-item" href="{% url 'respo_fin_add' field.id %}">Ajouter</a> -->
+                                    
+
+
+                                    <a class="btn btn-outline-primary" href="{% url 'update_fin' field.id %}" style="padding: 2px 11px;">
+                                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                        <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                        <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                                      </svg></a> 
+
+                            <a class="btn btn-outline-success " href="{% url 'dossier' field.id %}" style="padding: 2px 11px;">
+                                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-excel" viewBox="0 0 16 16">
+                                        <path d="M5.884 6.68a.5.5 0 1 0-.768.64L7.349 10l-2.233 2.68a.5.5 0 0 0 .768.64L8 10.781l2.116 2.54a.5.5 0 0 0 .768-.641L8.651 10l2.233-2.68a.5.5 0 0 0-.768-.64L8 9.219l-2.116-2.54z"/>
+                                        <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z"/>
+                                      </svg> </a> 
+
+                                    {%endif%}
+
+                                    {%if user.etape == field.etape and user.role == "responsable informatique" %}
+                                    <!-- <a class="dropdown-item" href="{% url 'respo_info_add' field.id %}">Ajouter</a> -->
+                            
+
+                                    <a class="bi bi-pencil-square" href="{% url 'update_info' field.id %}">
+                                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                        <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                        <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                                      </svg>
+                                      Ajouter / Editer</a>
+                                    <i class="bi bi-pencil-square"></i>
+                                    <a class="bi bi-pencil-square" href="{% url 'dossier' field.id %}">Exporter</a>
+
+                                    {%endif%}
+
+                                  
+
+
+                                    
+
+                                  </div>
+                                </td>
+                              </tr>
+                              <input type="hidden" id="numbre" value='{{nombre}}'/>
+                              <script>
+                              function getetape(){
+                                const etape = document.getElementById('value');
+                                const cooming = document.getElementById('cooming');
+                                etp = etape.innerHTML 
+
+                                return parseInt(etp) 
+                              }
+
+                              async function getValue(elem) {
+                                
+                                const n_d = document.getElementById('n_dossier')
+                                var n_dossier = elem.innerHTML;
+                              
+                                                                
+                                const new_nd = document.getElementById('new_nd');
+
+                                new_nd.innerHTML = n_dossier;
+
+                                let steps = document.querySelector('.clearfix')
+                                let etape1 = document.getElementById('1');
+                                let etape2 = document.getElementById('2');
+                                let etape3 = document.getElementById('3');
+                                let etape4 = document.getElementById('4');
+                                let etape5 = document.getElementById('5');
+                                let etape6 = document.getElementById('6');
+
+
+          
+                                switch(getetape()){
+                                  case 1:
+                                    etape2.className = 'step'
+                                    etape3.className = 'step'
+                                    etape4.className = 'step'
+                                    etape5.className= 'step'
+                                    etape6.className= 'step'
+                                    etape1.className = 'step current'
+                                    break;
+                                  case 2:
+                                    etape3.className = 'step'
+                                    etape4.className = 'step'
+                                    etape5.className= 'step'
+                                    etape6.className= 'step'
+                                    etape1.className = 'step done'
+                                    etape2.className = 'step current'
+                                    
+                                  break;
+                                  case 3:
+                                    etape4.className = 'step'
+                                    etape5.className= 'step'
+                                    etape6.className= 'step'
+                                    etape1.className = 'step done'
+                                    etape2.className = 'step done'
+                                    etape3.className = 'step current'
+                                    
+                                    
+                                  break;
+                                  case 4:
+                                
+                                    etape5.className= 'step'
+                                    etape6.className= 'step'
+                                    etape1.className = 'step done'
+                                    etape2.className = 'step done'
+                                    etape3.className = 'step done'
+                                    etape4.className = 'step current'
+                                    
+                                  break;
+                                  case 5:
+                                
+                                    etape6.className= 'step'
+                                    etape1.className = 'step done'
+                                    etape2.className = 'step done'
+                                    etape3.className = 'step done'
+                                    etape4.className = 'step done '
+                                    etape5.className= 'step current'
+                                
+                                  break;
+                                  case 6:
+                                
+                                etape4.className = 'step done'
+                                etape5.className= 'step done'
+                                etape1.className = 'step done'
+                                etape2.className = 'step done'
+                                etape3.className = 'step done'
+                                etape4.className = 'step done'
+                                etape6.className= 'step current'
+                                  
+                              break;
+
+
+
+
+
+                                }
+          
+
+                                }
+                              
+                            
+                            
+                            
+                            
+                                
+                                        
+                              </script>
+
+
+
+
+                            {%endfor%}
+
+                            <script>
+                              var a = document.getElementById('numbre').value;
+
+
+                            </script>
+
+
+
+
+                            
+
+                            
+                            
+                          
+
+                            
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {%include 'notification.html'%}
+          
+
+
+          </main>
+      </div>
+
+</body>
+
+
+
+{%endblock content%}

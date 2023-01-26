@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="favicon.ico">
+            <!-- New exprt CSS -->
+        <!-- Simple bar CSS -->
+    <link rel="stylesheet" href="{% static 'styles/simplebar.css'%}" />
+        <!-- Fonts CSS -->
+    <link href="https://fonts.googleapis.com/css2?family=Overpass:ital,wght@0,100;0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+        <!-- Icons CSS -->
+    <link rel="stylesheet" href="{% static 'styles/feather.css'%}">
+    <link rel="stylesheet" href="{% static 'styles/dataTables.bootstrap4.css'%}">
+        <!-- Date Range Picker CSS -->
+    <link rel="stylesheet" href="{% static 'styles/daterangepicker.css'%}">
+        <!-- App CSS -->
+    <link rel="stylesheet" href="{% static 'styles/app-light.css'%}" id="lightTheme" disabled>
+    <link rel="stylesheet" href="{% static 'styles/app-dark.css'%}" id="darkTheme"disabled>
+    <link rel="stylesheet" href="{% static 'styles/progressbar.css'%}">
+    <script src="/static/js/jquery.min.js"></script>
+
+
+
+
+    <title>Interlux</title>
+  </head>
+
+  <body class="vertical  dark">
+    
+    <div class="wrapper">
+    
+      
+    {% block content %}
+      
+
+   
+
+
+
+    {% endblock %}
+  </div>
+ 
+
+    <script src="/static/js/popper.min.js"></script>
+    <script src="/static/js/moment.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/simplebar.min.js"></script>
+    <script src='/static/js/daterangepicker.js'></script>
+    <script src='/static/js/jquery.stickOnScroll.js'></script>
+    <script src="/static/js/tinycolor-min.js"></script>
+    <script src="/static/js/config.js"></script>
+    <script src="/static/js/jquery.dataTables.min.js"></script>
+    <script src="/static/js/dataTables.bootstrap4.min.js"></script>
+    <script>
+    
+      $('#dataTable-1').DataTable(
+        {
+        "order": [],
+        scrollX: true,
+        fixedHeader: true,
+       
+
+
+        autoWidth: true,
+        "lengthMenu": [
+          [16, 32, 64, -1],
+          [16, 32, 64, "All"]
+        ],
+  
+        "oLanguage": {
+
+        "sSearch": "Rechercher:",
+        },
+
+        "language": {
+          "lengthMenu": "Afficher _MENU_ entrées",
+          "paginate": {
+          "previous": "Précédent",
+          "next": "Suivant"
+                      }
+                    },
+
+        columnDefs: [
+                  {
+              "targets": 6,
+              "createdCell": function (th, cellData, rowData, row, col) {
+                console.log(cellData)
+                // if ( cellData  ) {
+                //   $(th).css('color', 'red')
+                // }
+              }
+            },
+
+        {width    : "100px", targets:  [47]},
+        { className: "n_dossier", targets: [0] },
+
+
+
+        ],
+        
+        "createdRow": function( row, data, dataIndex ) {
+        
+          
+          
+          if (data[46] == "1" && $(role).val() == "chargee affaire" ){
+             
+             $(row).addClass( 'important' );
+         
+           }
+          else if(data[46] == "2" && $(role).val() == "responsable logistique1" ){
+            $(row).addClass( 'important' );
+
+          }
+          else if(data[46] == "3" && $(role).val() == "cresponsable logistique2" ){
+            $(row).addClass( 'important' );
+
+          }
+          else if(data[46] == "4" && $(role).val() == "responsable financier" ){
+            $(row).addClass( 'important' );
+
+          }
+          else if(data[46] == "5" && $(role).val() == "responsable informatique" ){
+            $(row).addClass( 'important' );
+
+          }
+          else if(data[46] == "6"){
+            $(row).addClass( 'cloture' );
+
+          }
+
+
+          
+        }
+  
+      });
+
+   
+
+   
+  
+   
+    </script>
+
+
+    <script src="/static/js/apps.js"></script>
+
+    <script src="{% static 'js/script.js' %}"></script>
+    <script src="{% static 'js/progressbar.js'"%}> </script>
+
+
+    
+  </body>
+</html>
+
+
+
+
+

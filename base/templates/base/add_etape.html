@@ -1,0 +1,46 @@
+{%extends 'main.html'%} 
+{% load crispy_forms_tags %}
+
+{%block content%} 
+
+{%include 'navbar.html'%} 
+{%include 'sidebar.html'%}
+
+<body class="vertical dark">
+    <main role="main" class="main-content">
+
+  <div class="container-fluid">
+    <div class="row justify-content-center">
+      <div class="col-12">
+        <div class="wrapper">
+          <div class="row my-4">
+            <div class="col-md-12">
+              <div class="card shadow">
+                <div class="card-body">
+                
+                    <form  method="POST" class="col-lg-6 col-md-8 col-10 mx-auto" id="form" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{form|crispy}}
+                        <div class="col-sm-4 ml-3">
+                        
+                            <button class="btn btn-lg btn-primary btn-block" type="submit"  ><span>SUBMIT</span></button>
+                        
+                        </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    </div>
+</div>
+    </main>
+    <script>
+
+    </script>
+</body>
+
+
+{%endblock content%}

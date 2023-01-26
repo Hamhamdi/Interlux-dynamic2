@@ -1,0 +1,54 @@
+{%extends 'main.html'%} 
+{% load crispy_forms_tags %}
+
+{%block content%} 
+
+{%include 'navbar.html'%} 
+{%include 'sidebar.html'%}
+
+<body class="vertical dark">
+    <main role="main" class="main-content">
+
+  <div class="container-fluid">
+    <div class="row justify-content-center">
+      <div class="col-12">
+        <div class="wrapper">
+          <div class="row my-4">
+            <div class="col-md-12">
+              <div class="card shadow">
+                <div class="card-body">
+                  <form class="col-lg-6 col-md-8 col-10 mx-auto"  method="POST" >
+                    {% csrf_token %}
+
+                    <div class="mx-auto text-center my-4">
+                      <h2 class="my-3">Ajouter les informations</h2>
+                    </div>
+                  
+                    {{form|crispy}}
+
+                    <hr class="my-4" />
+                    <button
+                      class="btn btn-lg btn-primary btn-block"
+                      type="submit"
+                    >
+                      Valider
+                    </button>
+                    <button
+                    class="btn btn-lg btn-primary btn-block"
+                    type=""
+                  >
+                    Enregister
+                  </button>
+                    <p class="mt-5 mb-3 text-muted text-center">© 2022</p>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+    </main>
+</body>
+{%endblock content%}
